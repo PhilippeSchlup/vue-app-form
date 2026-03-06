@@ -13,23 +13,29 @@ app.use(bodyParser.json());
 // API: Submit Survey
 app.post('/api/submit', async (req, res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const { adminPassword, ...formData } = req.body;
 
-  // Check if IP already responded
-  const { data: existing, error: checkError } = await supabase
-    .from('responses')
-    .select('id')
-    .eq('ip', ip)
-    .single();
+  // Allow admin bypass
+  const isAdmin = adminPassword === ADMIN_PASSWORD;
 
-  if (existing) {
-    return res.status(403).json({ success: false, message: 'IP already responded' });
+  if (!isAdmin) {
+    // Check if IP already responded
+    const { data: existing, error: checkError } = await supabase
+      .from('responses')
+      .select('id')
+      .eq('ip', ip)
+      .single();
+
+    if (existing) {
+      return res.status(403).json({ success: false, message: 'IP already responded' });
+    }
   }
 
   const { data, error } = await supabase
     .from('responses')
     .insert([
       { 
-        ...req.body, 
+        ...formData, 
         ip,
         timestamp: new Date().toISOString()
       }

@@ -58,6 +58,7 @@ const login = async () => {
     const response = await axios.post('http://localhost:3001/api/admin/login', { password: password.value })
     if (response.data.success) {
       authenticated.value = true
+      localStorage.setItem('admin_password', password.value)
       fetchData()
     }
   } catch (err) {

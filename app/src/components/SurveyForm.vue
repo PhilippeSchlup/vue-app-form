@@ -70,14 +70,17 @@ const submitForm = async () => {
   try {
     const response = await axios.post('http://localhost:3001/api/submit', {
       ...form.value,
-      language: locale.value
+      language: locale.value,
+      adminPassword: localStorage.getItem('admin_password') // Optional: allow admin bypass if they have the password stored
     })
     if (response.data.success) {
       submitted.value = true
+      step.value = 3
     }
   } catch (err: any) {
     if (err.response && err.response.status === 403) {
       alreadyResponded.value = true
+      step.value = 3
     } else {
       error.value = 'An error occurred. Please try again.'
     }
@@ -89,6 +92,15 @@ const submitForm = async () => {
 
 <template>
   <v-container class="fill-height justify-center py-10 d-flex align-center w-100" max-width="100%">
+    <!-- Hidden Admin Access Button -->
+    <v-btn
+      icon="mdi-shield-lock"
+      variant="flat"
+      color="transparent"
+      class="admin-access-btn"
+      title="Admin Access"
+      @click="$emit('toggle-admin')"
+    ></v-btn>
     <v-card width="100%" max-width="850" class="pa-8 rounded-xl overflow-hidden" elevation="10">
       <div class="text-center mb-6">
         <h1 class="text-h4 font-weight-bold text-primary mb-2">{{ t('survey.title') }}</h1>
@@ -129,6 +141,17 @@ const submitForm = async () => {
 
         <!-- Step 2: Survey Questions -->
         <v-window-item :value="2" >
+          <div class="mb-4">
+            <v-btn
+              variant="text"
+              color="primary"
+              prepend-icon="mdi-arrow-left"
+              @click="step = 1"
+              class="font-weight-bold"
+            >
+              {{ t('survey.labels.back') }}
+            </v-btn>
+          </div>
           <v-form @submit.prevent="submitForm" >
             <!-- Section: Faro Experience -->
             <v-sheet border rounded="xl" class="pa-6 mb-8 bg-grey-lighten-5">
@@ -316,7 +339,7 @@ const submitForm = async () => {
               {{ alreadyResponded ? t('survey.labels.already_responded') : t('survey.labels.success') }}
             </h2>
             <p class="text-h6 text-medium-emphasis px-10">
-              {{ alreadyResponded ? 'Thank you for your interest, but only one response per user is allowed.' : 'We appreciate your time and valuable feedback. Your response has been safely recorded.' }}
+              {{ alreadyResponded ? t('survey.labels.already_responded_msg') : t('survey.labels.success_msg') }}
             </p>
             <v-btn
               variant="outlined"
@@ -325,7 +348,7 @@ const submitForm = async () => {
               prepend-icon="mdi-home"
               @click="step = 1; submitted = false; alreadyResponded = false;"
             >
-              Back to Start
+              {{ t('survey.labels.back_to_start') }}
             </v-btn>
           </v-sheet>
         </v-window-item>
