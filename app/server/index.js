@@ -12,22 +12,22 @@ app.use(bodyParser.json());
 
 // API: Submit Survey
 app.post('/api/submit', async (req, res) => {
-  const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+  const ip_address = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   const { adminPassword, ...formData } = req.body;
 
   // Allow admin bypass
   const isAdmin = adminPassword === ADMIN_PASSWORD;
 
   if (!isAdmin) {
-    // Check if IP already responded
+    // Check if IP address already responded
     const { data: existing, error: checkError } = await supabase
       .from('responses')
       .select('id')
-      .eq('ip', ip)
+      .eq('ip_address', ip_address)
       .single();
 
     if (existing) {
-      return res.status(403).json({ success: false, message: 'IP already responded' });
+      return res.status(403).json({ success: false, message: 'IP address already responded' });
     }
   }
 
@@ -36,7 +36,7 @@ app.post('/api/submit', async (req, res) => {
     .insert([
       { 
         ...formData, 
-        ip,
+        ip_address,
         timestamp: new Date().toISOString()
       }
     ]);

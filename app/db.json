@@ -2,7 +2,7 @@
   "responses": [
     "U2FsdGVkX1/X12RtplkpViKse95b800HUnMRb3y34XJFcFJ1PI89PCqRXwEybNxrRm83xGLykpr1Naahr5bq4MHVTzW0fGzDdJ9XYbPt9Uj/IULPp9FQH0EtAWRpILNgPuhhRsL7eoNQDsjmiy4wlKyNTGS5whZyRyCQ6PhqXnLKefGmy7fevi+iU3Sxhw4qZVnJc38uKDkPS05QjIIhUyHkAXYet7HRg8bzZEt1GTFe2SeAu9wcKtXEJAapDgOK"
   ],
-  "ips": [
+  "ip_addresses": [
     "::1"
   ]
 }
