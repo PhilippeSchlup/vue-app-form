@@ -68,7 +68,8 @@ const submitForm = async () => {
   loading.value = true
   error.value = ''
   try {
-    const response = await axios.post('http://localhost:3001/api/submit', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const response = await axios.post(`${apiUrl}/api/submit`, {
       ...form.value,
       language: locale.value,
       adminPassword: localStorage.getItem('admin_password') // Optional: allow admin bypass if they have the password stored

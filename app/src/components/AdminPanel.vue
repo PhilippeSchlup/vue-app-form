@@ -55,7 +55,8 @@ const login = async () => {
   loading.value = true
   error.value = ''
   try {
-    const response = await axios.post('http://localhost:3001/api/admin/login', { password: password.value })
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const response = await axios.post(`${apiUrl}/api/admin/login`, { password: password.value })
     if (response.data.success) {
       authenticated.value = true
       localStorage.setItem('admin_password', password.value)
@@ -70,7 +71,8 @@ const login = async () => {
 
 const fetchData = async () => {
   try {
-    const response = await axios.get('http://localhost:3001/api/admin/data', {
+    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const response = await axios.get(`${apiUrl}/api/admin/data`, {
       headers: { Authorization: `Bearer ${password.value}` }
     })
     stats.value = response.data.stats
