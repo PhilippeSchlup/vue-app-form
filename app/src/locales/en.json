@@ -1,0 +1,64 @@
+{
+  "survey": {
+    "title": "Sondage Multilingue: Expérience à Faro et Habitudes d'Apprentissage",
+    "subtitle": "Multi-Language Survey: Faro Experience and Learning Habits",
+    "language_selection": {
+      "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
+      "en": "English (Anglais)",
+      "es": "Español (Spanish)",
+      "fr": "Français (French)",
+      "pt": "Português (Portuguese)"
+    },
+    "sections": {
+      "faro_experience": "Faro Experience",
+      "tech_learning": "Technology and Language Learning"
+    },
+    "questions": {
+      "q2": "On a scale of 0 (Very Poor) to 10 (Excellent), how would you rate your overall appreciation of the city of Faro?",
+      "q3": "What do you consider to be the single biggest flaw of Faro? (Select all that apply)",
+      "q3_options": {
+        "transport": "Public transport (e.g., bus/train service)",
+        "entertainment": "Lack of entertainment/cultural activities",
+        "cost": "High cost of living/tourism",
+        "cleanliness": "Cleanliness and maintenance",
+        "infrastructure": "Infrastructure (e.g., roads, bike paths)",
+        "other": "Other (Please specify below)"
+      },
+      "q4": "If you selected 'Other' above, please specify the biggest flaw:",
+      "q5": "Do you have any suggestions to improve the city of Faro? (Optional)",
+      "q6": "Which are the operating system of your smartphone?",
+      "q6_options": {
+        "android": "Android",
+        "ios": "iOS"
+      },
+      "q7": "How would you rate your overall satisfaction with your mobile operating system?",
+      "q8": "If you use Duolingo, how would you rate your overall appreciation of the application?",
+      "q9": "What do you consider Duolingo's biggest flaw?",
+      "q9_options": {
+        "repetitive": "Repetitive exercises",
+        "depth": "Lack of depth/real conversation practice",
+        "ads": "Too many ads (if using the free version)",
+        "gamification": "Gamification is distracting",
+        "inaccurate": "The translation system is sometimes inaccurate",
+        "none": "I don't use Duolingo"
+      },
+      "q10": "Would you be willing to pay €3 a month for a language learning app that meets your needs?",
+      "q10_options": {
+        "yes": "Yes, absolutely",
+        "maybe": "Maybe, depending on the features",
+        "no": "No, I prefer free options"
+      }
+    },
+    "labels": {
+      "very_poor": "Very Poor",
+      "excellent": "Excellent",
+      "submit": "Submit Response",
+      "already_responded": "You have already responded to this survey.",
+      "success": "Survey submitted successfully!",
+      "admin": "Admin Panel",
+      "password": "Admin Password",
+      "login": "Login",
+      "stats": "Survey Statistics"
+    }
+  }
+}

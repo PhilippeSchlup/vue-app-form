@@ -1,0 +1,64 @@
+{
+  "survey": {
+    "title": "Sondage Multilingue: Expérience à Faro et Habitudes d'Apprentissage",
+    "subtitle": "Sondage Multi-Langues : Expérience à Faro et Habitudes d'Apprentissage",
+    "language_selection": {
+      "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
+      "en": "English (Anglais)",
+      "es": "Español (Spanish)",
+      "fr": "Français (French)",
+      "pt": "Português (Portuguese)"
+    },
+    "sections": {
+      "faro_experience": "Expérience à Faro",
+      "tech_learning": "Technologie et Apprentissage des Langues"
+    },
+    "questions": {
+      "q2": "Sur une échelle de 0 (Très médiocre) à 10 (Excellent), comment évalueriez-vous votre appréciation globale de la ville de Faro ?",
+      "q3": "Quel est selon vous le plus gros défaut de Faro ? (Sélectionnez tout ce qui s'applique)",
+      "q3_options": {
+        "transport": "Transports publics (ex. service de bus/train)",
+        "entertainment": "Manque d'activités de divertissement/culturelles",
+        "cost": "Coût de la vie/du tourisme élevé",
+        "cleanliness": "Propreté et entretien",
+        "infrastructure": "Infrastructures (ex. routes, pistes cyclables)",
+        "other": "Autre (Veuillez préciser ci-dessous)"
+      },
+      "q4": "Si vous avez sélectionné 'Autre' ci-dessus, veuillez préciser le plus gros défaut :",
+      "q5": "Avez-vous des suggestions pour améliorer la ville de Faro ? (Optionnel)",
+      "q6": "Quel est le système d'exploitation de votre smartphone ?",
+      "q6_options": {
+        "android": "Android",
+        "ios": "iOS"
+      },
+      "q7": "Comment évalueriez-vous votre satisfaction globale à l'égard de votre système d'exploitation mobile ?",
+      "q8": "Si vous utilisez Duolingo, comment évalueriez-vous votre appréciation globale de l'application ?",
+      "q9": "Quel est selon vous le plus gros défaut de Duolingo ?",
+      "q9_options": {
+        "repetitive": "Exercices répétitifs",
+        "depth": "Manque de profondeur/pratique de conversation réelle",
+        "ads": "Trop de publicités (si vous utilisez la version gratuite)",
+        "gamification": "La gamification est distrayante",
+        "inaccurate": "Le système de traduction est parfois imprécis",
+        "none": "Je n'utilise pas Duolingo"
+      },
+      "q10": "Seriez-vous prêt à payer 3 € par mois pour une application d'apprentissage des langues qui répond à vos besoins ?",
+      "q10_options": {
+        "yes": "Oui, absolument",
+        "maybe": "Peut-être, selon les fonctionnalités",
+        "no": "Non, je préfère les options gratuites"
+      }
+    },
+    "labels": {
+      "very_poor": "Très médiocre",
+      "excellent": "Excellent",
+      "submit": "Soumettre la réponse",
+      "already_responded": "Vous avez déjà répondu à ce sondage.",
+      "success": "Sondage soumis avec succès !",
+      "admin": "Panneau d'administration",
+      "password": "Mot de passe administrateur",
+      "login": "Connexion",
+      "stats": "Statistiques du sondage"
+    }
+  }
+}

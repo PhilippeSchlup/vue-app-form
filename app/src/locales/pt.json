@@ -1,0 +1,64 @@
+{
+  "survey": {
+    "title": "Sondagem Multilingue: Experiência em Faro e Hábitos de Aprendizagem",
+    "subtitle": "Inquérito Multi-Idioma: Experiência em Faro e Hábitos de Aprendizagem",
+    "language_selection": {
+      "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
+      "en": "English (Anglais)",
+      "es": "Español (Spanish)",
+      "fr": "Français (French)",
+      "pt": "Português (Portuguese)"
+    },
+    "sections": {
+      "faro_experience": "Experiência em Faro",
+      "tech_learning": "Tecnologia e Aprendizagem de Idiomas"
+    },
+    "questions": {
+      "q2": "Numa escala de 0 (Muito pobre) a 10 (Excelente), como classificaria a sua apreciação global da cidade de Faro?",
+      "q3": "O que considera ser o maior defeito de Faro? (Selecione todas as que se aplicam)",
+      "q3_options": {
+        "transport": "Transporte público (por exemplo, serviço de autocarro/comboio)",
+        "entertainment": "Falta de atividades de entretenimento/culturais",
+        "cost": "Elevado custo de vida/turismo",
+        "cleanliness": "Limpeza e manutenção",
+        "infrastructure": "Infraestrutura (por exemplo, estradas, ciclovias)",
+        "other": "Outros (Por favor, especifique abaixo)"
+      },
+      "q4": "Se selecionou 'Outros' acima, especifique o maior defeito:",
+      "q5": "Tem alguma sugestão para melhorar a cidade de Faro? (Opcional)",
+      "q6": "Qual é o sistema operativo do seu smartphone?",
+      "q6_options": {
+        "android": "Android",
+        "ios": "iOS"
+      },
+      "q7": "Como classificaria a sua satisfação global com o sistema operativo do seu telemóvel?",
+      "q8": "Se utiliza o Duolingo, como classificaria a sua apreciação global da aplicação?",
+      "q9": "O que considera ser o maior defeito do Duolingo?",
+      "q9_options": {
+        "repetitive": "Exercícios repetitivos",
+        "depth": "Falta de profundidade/prática de conversação real",
+        "ads": "Demasiados anúncios (se estiver a utilizar a versão gratuita)",
+        "gamification": "A gamificação distrai",
+        "inaccurate": "O sistema de tradução é por vezes impreciso",
+        "none": "Não utilizo o Duolingo"
+      },
+      "q10": "Estaria disposto a pagar 3 € por mês por uma aplicação de aprendizagem de línguas que satisfizesse as suas necessidades?",
+      "q10_options": {
+        "yes": "Sim, absolutamente",
+        "maybe": "Talvez, dependendo das funcionalidades",
+        "no": "Não, prefiro as opções gratuitas"
+      }
+    },
+    "labels": {
+      "very_poor": "Muito pobre",
+      "excellent": "Excelente",
+      "submit": "Submeter Resposta",
+      "already_responded": "Já respondeu a este inquérito.",
+      "success": "Inquérito submetido com sucesso!",
+      "admin": "Painel de Administração",
+      "password": "Palavra-passe do Administrador",
+      "login": "Entrar",
+      "stats": "Estatísticas do Inquérito"
+    }
+  }
+}
