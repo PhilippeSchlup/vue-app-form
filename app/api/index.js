@@ -78,11 +78,11 @@ app.get('/api/admin/data', async (req, res) => {
   // Calculate statistics
   const stats = {
     avgFaroRating: responses.length > 0 
-      ? responses.reduce((acc, curr) => acc + (Number(curr.q2) || 0), 0) / responses.length 
+      ? responses.reduce((acc, curr) => acc + (Number(curr.faro_rating) || 0), 0) / responses.length 
       : 0,
     osCount: {
-      android: responses.filter(r => r.q6 === 'android').length,
-      ios: responses.filter(r => r.q6 === 'ios').length,
+      android: responses.filter(r => r.smartphone_os === 'android').length,
+      ios: responses.filter(r => r.smartphone_os === 'ios').length,
     }
   };
 

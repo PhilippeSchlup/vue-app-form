@@ -12,15 +12,15 @@ const alreadyResponded = ref(false)
 const error = ref('')
 
 const form = ref({
-  q2: 5,
-  q3: [] as string[],
-  q4: '',
-  q5: '',
-  q6: '',
-  q7: 3,
-  q8: 4,
-  q9: '',
-  q10: ''
+  faro_rating: 5,
+  faro_flaws: [] as string[],
+  faro_flaws_other: '',
+  faro_suggestions: '',
+  smartphone_os: '',
+  os_satisfaction: 3,
+  duolingo_rating: 4,
+  duolingo_flaw: '',
+  willing_to_pay: ''
 })
 
 const languages = [
@@ -72,7 +72,6 @@ const submitForm = async () => {
     const response = await axios.post(`${apiUrl}/api/submit`, {
       ...form.value,
       language: locale.value,
-      adminPassword: localStorage.getItem('admin_password') // Optional: allow admin bypass if they have the password stored
     })
     if (response.data.success) {
       submitted.value = true
@@ -165,7 +164,7 @@ const submitForm = async () => {
               <div class="mb-8">
                 <p class="text-body-1 font-weight-medium mb-4">2. {{ t('survey.questions.q2') }}</p>
                 <v-slider
-                  v-model="form.q2"
+                  v-model="form.faro_rating"
                   min="0"
                   max="10"
                   step="1"
@@ -188,7 +187,7 @@ const submitForm = async () => {
                 <v-row dense>
                   <v-col v-for="option in q3Options" :key="option.value" cols="12" sm="6">
                     <v-checkbox
-                      v-model="form.q3"
+                      v-model="form.faro_flaws"
                       :label="t(option.labelKey)"
                       :value="option.value"
                       hide-details
@@ -201,8 +200,8 @@ const submitForm = async () => {
 
               <v-expand-transition>
                 <v-textarea
-                  v-if="form.q3.includes('other')"
-                  v-model="form.q4"
+                  v-if="form.faro_flaws.includes('other')"
+                  v-model="form.faro_flaws_other"
                   :label="'4. ' + t('survey.questions.q4')"
                   rows="2"
                   variant="outlined"
@@ -213,7 +212,7 @@ const submitForm = async () => {
               </v-expand-transition>
 
               <v-textarea
-                v-model="form.q5"
+                v-model="form.faro_suggestions"
                 :label="'5. ' + t('survey.questions.q5')"
                 rows="3"
                 variant="outlined"
@@ -231,7 +230,7 @@ const submitForm = async () => {
 
               <div class="mb-8">
                 <p class="text-body-1 font-weight-medium mb-3">6. {{ t('survey.questions.q6') }}</p>
-                <v-radio-group v-model="form.q6" inline>
+                <v-radio-group v-model="form.smartphone_os" inline>
                   <v-radio
                     v-for="option in q6Options"
                     :key="option.value"
@@ -247,7 +246,7 @@ const submitForm = async () => {
                 <p class="text-body-1 font-weight-medium mb-3">7. {{ t('survey.questions.q7') }}</p>
                 <div class="d-flex justify-center">
                   <v-rating
-                    v-model="form.q7"
+                    v-model="form.os_satisfaction"
                     length="5"
                     color="amber-darken-2"
                     active-color="amber-darken-2"
@@ -261,7 +260,7 @@ const submitForm = async () => {
                 <p class="text-body-1 font-weight-medium mb-3">8. {{ t('survey.questions.q8') }}</p>
                 <div class="d-flex justify-center">
                   <v-rating
-                    v-model="form.q8"
+                    v-model="form.duolingo_rating"
                     length="7"
                     color="green-darken-1"
                     active-color="green-darken-1"
@@ -274,7 +273,7 @@ const submitForm = async () => {
 
               <div class="mb-8">
                 <p class="text-body-1 font-weight-medium mb-3">9. {{ t('survey.questions.q9') }}</p>
-                <v-radio-group v-model="form.q9">
+                <v-radio-group v-model="form.duolingo_flaw">
                   <v-radio
                     v-for="option in q9Options"
                     :key="option.value"
@@ -288,7 +287,7 @@ const submitForm = async () => {
 
               <div class="mb-8">
                 <p class="text-body-1 font-weight-medium mb-3">10. {{ t('survey.questions.q10') }}</p>
-                <v-radio-group v-model="form.q10">
+                <v-radio-group v-model="form.willing_to_pay">
                   <v-radio
                     v-for="option in q10Options"
                     :key="option.value"

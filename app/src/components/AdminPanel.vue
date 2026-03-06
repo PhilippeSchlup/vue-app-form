@@ -16,21 +16,21 @@ const detailsDialog = ref(false)
 const exportToCSV = () => {
   if (responses.value.length === 0) return
 
-  const headers = ['Timestamp', 'IP Address', 'Language', 'Q2 (Rating)', 'Q3 (Flaws)', 'Q4 (Other)', 'Q5 (Suggestions)', 'Q6 (OS)', 'Q7 (OS Satisfaction)', 'Q8 (Duolingo)', 'Q9 (Duo Flaw)', 'Q10 (Willing to Pay)']
+  const headers = ['Timestamp', 'IP Address', 'Language', 'Faro Rating', 'Faro Flaws', 'Other Flaws', 'Suggestions', 'OS', 'OS Satisfaction', 'Duolingo Rating', 'Duo Flaw', 'Willing to Pay']
   
   const csvRows = responses.value.map(res => [
     new Date(res.timestamp).toLocaleString(),
     res.ip,
     res.language,
-    res.q2,
-    Array.isArray(res.q3) ? res.q3.join('; ') : res.q3,
-    res.q4 || '',
-    res.q5 || '',
-    res.q6,
-    res.q7,
-    res.q8,
-    res.q9,
-    res.q10
+    res.faro_rating,
+    Array.isArray(res.faro_flaws) ? res.faro_flaws.join('; ') : res.faro_flaws,
+    res.faro_flaws_other || '',
+    res.faro_suggestions || '',
+    res.smartphone_os,
+    res.os_satisfaction,
+    res.duolingo_rating,
+    res.duolingo_flaw,
+    res.willing_to_pay
   ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(','))
 
   const csvContent = [headers.join(','), ...csvRows].join('\n')
@@ -194,7 +194,7 @@ const fetchData = async () => {
                 </td>
                 <td>
                   <v-rating
-                    :model-value="res.q2"
+                    :model-value="res.faro_rating"
                     readonly
                     density="compact"
                     length="10"
@@ -203,8 +203,8 @@ const fetchData = async () => {
                   ></v-rating>
                 </td>
                 <td>
-                  <v-icon :icon="res.q6 === 'ios' ? 'mdi-apple' : 'mdi-android'" size="small" class="mr-1"></v-icon>
-                  {{ res.q6 }}
+                  <v-icon :icon="res.smartphone_os === 'ios' ? 'mdi-apple' : 'mdi-android'" size="small" class="mr-1"></v-icon>
+                  {{ res.smartphone_os }}
                 </td>
                 <td class="text-grey-darken-1">{{ new Date(res.timestamp).toLocaleDateString() }}</td>
                 <td class="text-center">
@@ -235,32 +235,51 @@ const fetchData = async () => {
           <div class="mb-6">
             <div class="d-flex mb-4">
               <v-chip class="mr-2" label size="small" color="primary">Lang: {{ selectedResponse.language }}</v-chip>
-              <v-chip class="mr-2" label size="small" color="secondary">OS: {{ selectedResponse.q6 }}</v-chip>
+              <v-chip class="mr-2" label size="small" color="secondary">OS: {{ selectedResponse.smartphone_os }}</v-chip>
               <v-chip label size="small" color="grey">{{ new Date(selectedResponse.timestamp).toLocaleString() }}</v-chip>
             </div>
             
-            <div v-for="n in 10" :key="n">
-              <div v-if="n > 1" class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
-                <div class="text-caption text-primary font-weight-bold mb-1">Question {{ n }}</div>
-                <div class="text-body-1">
-                  <!-- Custom rendering for different question types -->
-                  <div v-if="n === 2">
-                    <v-rating :model-value="selectedResponse.q2" readonly length="10" size="x-small" color="amber"></v-rating>
-                    <span class="ml-2">({{ selectedResponse.q2 }}/10)</span>
-                  </div>
-                  <div v-else-if="n === 3">
-                    <v-chip v-for="opt in selectedResponse.q3" :key="opt" size="x-small" class="mr-1 mb-1" color="blue">{{ opt }}</v-chip>
-                  </div>
-                  <div v-else-if="n === 7 || n === 8">
-                    <v-rating :model-value="selectedResponse['q'+n]" readonly length="7" size="x-small" color="green"></v-rating>
-                    <span class="ml-2">({{ selectedResponse['q'+n] }})</span>
-                  </div>
-                  <div v-else>
-                    {{ selectedResponse['q'+n] || 'No answer' }}
-                  </div>
-                </div>
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Faro Rating</div>
+              <v-rating :model-value="selectedResponse.faro_rating" readonly length="10" size="x-small" color="amber"></v-rating>
+              <span class="ml-2">({{ selectedResponse.faro_rating }}/10)</span>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Faro Flaws</div>
+              <v-chip v-for="opt in selectedResponse.faro_flaws" :key="opt" size="x-small" class="mr-1 mb-1" color="blue">{{ opt }}</v-chip>
+              <div v-if="selectedResponse.faro_flaws_other" class="mt-2 text-body-2 font-italic">
+                Other: {{ selectedResponse.faro_flaws_other }}
               </div>
             </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Faro Suggestions</div>
+              <div class="text-body-1">{{ selectedResponse.faro_suggestions || 'No suggestions' }}</div>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">OS Satisfaction</div>
+              <v-rating :model-value="selectedResponse.os_satisfaction" readonly length="5" size="x-small" color="amber"></v-rating>
+              <span class="ml-2">({{ selectedResponse.os_satisfaction }}/5)</span>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Duolingo Rating</div>
+              <v-rating :model-value="selectedResponse.duolingo_rating" readonly length="7" size="x-small" color="green"></v-rating>
+              <span class="ml-2">({{ selectedResponse.duolingo_rating }}/7)</span>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Duolingo Flaw</div>
+              <div class="text-body-1">{{ selectedResponse.duolingo_flaw || 'No flaw specified' }}</div>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Willing to Pay</div>
+              <div class="text-body-1">{{ selectedResponse.willing_to_pay || 'No answer' }}</div>
+            </div>
+
             <div class="mt-4 pt-4 border-top">
               <div class="text-caption text-grey">IP Address</div>
               <div class="text-body-2 font-italic">{{ selectedResponse.ip }}</div>
