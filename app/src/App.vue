@@ -53,6 +53,11 @@ const toggleAdmin = () => {
       <div v-else>
         <AdminPanel />
       </div>
+
+      <!-- Footer -->
+      <v-footer class="bg-transparent justify-center pt-8 pb-4">
+        <span class="text-caption text-medium-emphasis">By Philippe Schlup</span>
+      </v-footer>
     </v-main>
   </v-app>
 </template>

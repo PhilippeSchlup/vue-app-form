@@ -64,7 +64,7 @@ const login = async () => {
   loading.value = true
   error.value = ''
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const apiUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
     const response = await axios.post(`${apiUrl}/api/admin/login`, { password: password.value })
     if (response.data.success) {
       authenticated.value = true
@@ -80,7 +80,7 @@ const login = async () => {
 
 const fetchData = async () => {
   try {
-    const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+    const apiUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
     const response = await axios.get(`${apiUrl}/api/admin/data`, {
       headers: { Authorization: `Bearer ${password.value}` }
     })
@@ -93,8 +93,8 @@ const fetchData = async () => {
 </script>
 
 <template>
-  <v-container class="d-flex align-center justify-center mx-0 px-0 w-100 fill-height main-container">
-    <v-card class="mx-6 pa-8 rounded-xl w-100 " elevation="8">
+  <v-container class="d-flex align-center justify-center mx-0 px-0 w-100 fill-height main-container" max-width="100%">
+    <v-card class="mx-6 pa-8 rounded-xl w-100" max-width="1200px" elevation="8">
       <div class="d-flex align-center mb-8">
         <v-icon icon="mdi-shield-lock" color="primary" size="x-large" class="mr-3"></v-icon>
         <h1 class="text-h4 font-weight-bold text-primary">{{ t('survey.labels.admin') }}</h1>

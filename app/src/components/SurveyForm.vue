@@ -160,8 +160,8 @@ const submitForm = async () => {
   loading.value = true
   error.value = ''
   try {
-    const baseUrl = (import.meta.env.VITE_API_URL || 'http://localhost:3001').replace(/\/$/, '')
-    const response = await axios.post(`${baseUrl}/api/submit`, {
+    const apiUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
+    const response = await axios.post(`${apiUrl}/api/submit`, {
       ...form.value,
       language: locale.value,
     })
