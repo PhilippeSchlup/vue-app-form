@@ -3,7 +3,7 @@
     "title": "Survey: Faro & Learning",
     "subtitle": "Your feedback matters",
     "language_selection": {
-      "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
+      "question": "",
       "en": "English (Anglais)",
       "es": "Español (Spanish)",
       "fr": "Français (French)",
@@ -105,7 +105,7 @@
     "labels": {
       "very_poor": "Very Poor",
       "excellent": "Excellent",
-      "submit": "Submit Response",
+      "submit": "Submit",
       "back": "Return to Language Selection",
       "already_responded": "You already submitted an answer",
       "already_responded_msg": "Thank you for your interest, but only one response per user is allowed.",

@@ -105,7 +105,7 @@
     "labels": {
       "very_poor": "Muy pobre",
       "excellent": "Excelente",
-      "submit": "Enviar respuesta",
+      "submit": "Enviar",
       "back": "Volver a la selección de idioma",
       "already_responded": "Ya ha enviado una respuesta",
       "already_responded_msg": "Gracias por su interés, pero solo se permite una respuesta por usuario.",

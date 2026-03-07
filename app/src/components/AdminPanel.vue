@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useTheme } from 'vuetify'
 import axios from 'axios'
 
 const { t } = useI18n()
+const theme = useTheme()
 const password = ref('')
 const authenticated = ref(false)
 const stats = ref<any>(null)
@@ -91,8 +93,8 @@ const fetchData = async () => {
 </script>
 
 <template>
-  <v-container class="py-12">
-    <v-card max-width="1200" class="mx-auto pa-8 rounded-xl" elevation="8">
+  <v-container class="d-flex align-center justify-center mx-0 px-0 w-100 fill-height main-container">
+    <v-card class="mx-6 pa-8 rounded-xl w-100 " elevation="8">
       <div class="d-flex align-center mb-8">
         <v-icon icon="mdi-shield-lock" color="primary" size="x-large" class="mr-3"></v-icon>
         <h1 class="text-h4 font-weight-bold text-primary">{{ t('survey.labels.admin') }}</h1>
@@ -103,7 +105,7 @@ const fetchData = async () => {
       <div v-if="!authenticated">
         <v-row justify="center">
           <v-col cols="12" sm="8" md="6">
-            <v-card border rounded="lg" class="pa-6 bg-grey-lighten-5">
+            <v-card rounded="lg" class="pa-6" variant="flat">
               <v-form @submit.prevent="login">
                 <v-text-field
                   v-model="password"
@@ -113,7 +115,6 @@ const fetchData = async () => {
                   rounded="lg"
                   prepend-inner-icon="mdi-lock"
                   class="mb-4"
-                  bg-color="white"
                 ></v-text-field>
                 <v-alert
                   v-if="error"
@@ -125,7 +126,7 @@ const fetchData = async () => {
                   {{ error }}
                 </v-alert>
                 <v-btn
-                  color="primary"
+                  color="btn-color"
                   block
                   size="large"
                   @click="login"
@@ -143,23 +144,23 @@ const fetchData = async () => {
       <div v-else>
         <v-row>
           <v-col cols="12" md="4">
-            <v-card border flat class="pa-6 text-center rounded-lg bg-blue-lighten-5 h-100">
+            <v-card border flat class="pa-6 text-center rounded-lg h-100" :color="theme.global.current.value.dark ? 'blue-darken-4' : 'blue-lighten-5'">
               <v-icon icon="mdi-account-group" color="primary" class="mb-2"></v-icon>
-              <div class="text-subtitle-1 text-grey-darken-1 font-weight-medium">Total Responses</div>
+              <div class="text-subtitle-1 text-medium-emphasis font-weight-medium">Total Responses</div>
               <div class="text-h2 font-weight-bold text-primary">{{ responses.length }}</div>
             </v-card>
           </v-col>
           <v-col cols="12" md="4">
-            <v-card border flat class="pa-6 text-center rounded-lg bg-green-lighten-5 h-100">
+            <v-card border flat class="pa-6 text-center rounded-lg h-100" :color="theme.global.current.value.dark ? 'green-darken-4' : 'green-lighten-5'">
               <v-icon icon="mdi-star-outline" color="success" class="mb-2"></v-icon>
-              <div class="text-subtitle-1 text-grey-darken-1 font-weight-medium">Avg. Faro Rating</div>
+              <div class="text-subtitle-1 text-medium-emphasis font-weight-medium">Avg. Faro Rating</div>
               <div class="text-h2 font-weight-bold text-success">{{ stats?.avgFaroRating?.toFixed(1) || 0 }}</div>
             </v-card>
           </v-col>
           <v-col cols="12" md="4">
-            <v-card border flat class="pa-6 text-center rounded-lg bg-purple-lighten-5 h-100">
+            <v-card border flat class="pa-6 text-center rounded-lg h-100" :color="theme.global.current.value.dark ? 'purple-darken-4' : 'purple-lighten-5'">
               <v-icon icon="mdi-cellphone-link" color="purple" class="mb-2"></v-icon>
-              <div class="text-subtitle-1 text-grey-darken-1 font-weight-medium">OS Share</div>
+              <div class="text-subtitle-1 text-medium-emphasis font-weight-medium">OS Share</div>
               <div class="text-h2 font-weight-bold text-purple">{{ stats?.osCount?.android || 0 }} <span class="text-h5">/</span> {{ stats?.osCount?.ios || 0 }}</div>
             </v-card>
           </v-col>
@@ -187,10 +188,11 @@ const fetchData = async () => {
         <v-card border class="rounded-lg overflow-hidden">
           <v-table hover>
             <thead>
-              <tr class="bg-grey-lighten-4">
+              <tr :class="theme.global.current.value.dark ? 'bg-grey-darken-4' : 'bg-grey-lighten-4'">
                 <th class="font-weight-bold">Language</th>
                 <th class="font-weight-bold">Faro Rating</th>
                 <th class="font-weight-bold">OS</th>
+                <th class="font-weight-bold">Timestamp</th>
                 <th class="font-weight-bold text-center">Actions</th>
               </tr>
             </thead>
@@ -213,7 +215,7 @@ const fetchData = async () => {
                   <v-icon :icon="res.smartphone_os === 'ios' ? 'mdi-apple' : 'mdi-android'" size="small" class="mr-1"></v-icon>
                   {{ res.smartphone_os }}
                 </td>
-                <td class="text-grey-darken-1">{{ new Date(res.timestamp).toLocaleDateString() }}</td>
+                <td class="text-medium-emphasis">{{ new Date(res.timestamp).toLocaleDateString() }}</td>
                 <td class="text-center">
                   <v-btn
                     icon="mdi-eye"
@@ -246,13 +248,13 @@ const fetchData = async () => {
               <v-chip label size="small" color="grey">{{ new Date(selectedResponse.timestamp).toLocaleString() }}</v-chip>
             </div>
             
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Faro Rating</div>
               <v-rating :model-value="selectedResponse.faro_rating" readonly length="10" size="x-small" color="amber"></v-rating>
               <span class="ml-2">({{ selectedResponse.faro_rating }}/10)</span>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Faro Flaws</div>
               <v-chip v-for="opt in selectedResponse.faro_flaws" :key="opt" size="x-small" class="mr-1 mb-1" color="blue">{{ opt }}</v-chip>
               <div v-if="selectedResponse.faro_flaws_other" class="mt-2 text-body-2 font-italic">
@@ -260,63 +262,68 @@ const fetchData = async () => {
               </div>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Faro Suggestions</div>
               <div class="text-body-1">{{ selectedResponse.faro_suggestions || 'No suggestions' }}</div>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Faro Duration</div>
               <div class="text-body-1">{{ selectedResponse.faro_residence_duration || 'No answer' }}</div>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Business Plan</div>
               <div class="text-body-1">{{ selectedResponse.business_plan || 'No answer' }}</div>
               <div v-if="selectedResponse.business_field" class="mt-1 text-body-2">Field: {{ selectedResponse.business_field }}</div>
               <div v-if="selectedResponse.app_help_business" class="mt-1 text-body-2">App Help: {{ selectedResponse.app_help_business }}</div>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">OS Satisfaction</div>
               <v-rating :model-value="selectedResponse.os_satisfaction" readonly length="5" size="x-small" color="amber"></v-rating>
               <span class="ml-2">({{ selectedResponse.os_satisfaction }}/5)</span>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Most Used App & Reason</div>
               <div class="text-body-1">{{ selectedResponse.most_used_app || 'No answer' }}</div>
               <div v-if="selectedResponse.most_used_app_reason" class="mt-1 text-body-2">Reason: {{ selectedResponse.most_used_app_reason }}</div>
               <div v-if="selectedResponse.subject_to_study" class="mt-1 text-body-2">Subject: {{ selectedResponse.subject_to_study }}</div>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Duolingo Rating</div>
-              <v-rating :model-value="selectedResponse.duolingo_rating" readonly length="7" size="x-small" color="green"></v-rating>
-              <span class="ml-2">({{ selectedResponse.duolingo_rating }}/7)</span>
+              <v-rating :model-value="selectedResponse.duolingo_rating" readonly length="10" size="x-small" color="green"></v-rating>
+              <span class="ml-2">({{ selectedResponse.duolingo_rating }}/10)</span>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Duolingo Flaw</div>
               <div class="text-body-1">{{ selectedResponse.duolingo_flaw || 'No flaw specified' }}</div>
             </div>
 
-            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+            <div class="mb-4 pa-3 rounded-lg border">
               <div class="text-caption text-primary font-weight-bold mb-1">Willing to Pay</div>
               <div class="text-body-1">{{ selectedResponse.willing_to_pay || 'No answer' }}</div>
             </div>
 
-            <div class="mt-4 pt-4 border-top">
-              <div class="text-caption text-grey">IP Address</div>
+            <div class="mt-4 pt-4 border-t">
+              <div class="text-caption text-medium-emphasis">IP Address</div>
               <div class="text-body-2 font-italic">{{ selectedResponse.ip }}</div>
             </div>
           </div>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="primary" variant="tonal" class="rounded-lg" @click="detailsDialog = false">Close</v-btn>
+          <v-btn color="btn-color" variant="tonal" class="rounded-lg" @click="detailsDialog = false">Close</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
 </template>
+<style scoped>
+.main-container {
+  min-height: calc(100vh - 64px);
+}
+</style>

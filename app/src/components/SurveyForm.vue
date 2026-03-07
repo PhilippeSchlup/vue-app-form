@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import { ref, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useDisplay, useTheme } from 'vuetify'
 import axios from 'axios'
 
 const { t, locale } = useI18n()
+const { smAndDown } = useDisplay()
+const theme = useTheme()
 
 const step = ref(1)
 const loading = ref(false)
@@ -182,7 +185,7 @@ const submitForm = async () => {
 </script>
 
 <template>
-  <v-container class="fill-height justify-center py-10 d-flex align-center w-100" max-width="100%">
+  <v-container class="fill-height justify-center py-10 d-flex align-center w-100 main-container" max-width="100%" color="background">
     <!-- Hidden Admin Access Button -->
     <v-btn
       icon="mdi-shield-lock"
@@ -192,8 +195,8 @@ const submitForm = async () => {
       title="Admin Access"
       @click="$emit('toggle-admin')"
     ></v-btn>
-    <v-card width="100%" max-width="850" class="pa-8 rounded-xl overflow-hidden" elevation="10">
-      <div class="text-center mb-6">
+    <v-card width="100%" max-width="850" class="pa-0 rounded-xl overflow-hidden mx-2" elevation="10">
+      <div class="text-center mb-6 pt-6 px-4">
         <h1 class="text-h4 font-weight-bold text-primary mb-2">{{ t('survey.title') }}</h1>
         <p class="text-subtitle-1 text-medium-emphasis">{{ t('survey.subtitle') }}</p>
       </div>
@@ -203,10 +206,10 @@ const submitForm = async () => {
       <v-window v-model="step" :touch="false">
         <!-- Step 1: Language Selection -->
         <v-window-item :value="1">
-          <div class="text-h6 mb-6 text-center">{{ t('survey.language_selection.question') }}</div>
+          <!-- <div class="text-h6 mb-6 text-center">{{ t('survey.language_selection.question') }}</div> -->
           <v-row justify="center">
             <v-col cols="12" sm="8">
-              <v-list class="bg-transparent">
+              <v-list class="bg-transparent mx-4 pb-8">
                 <v-list-item
                   v-for="lang in languages"
                   :key="lang.value"
@@ -232,7 +235,7 @@ const submitForm = async () => {
 
         <!-- Step 2: Survey Questions -->
         <v-window-item :value="2" >
-          <div class="mb-4">
+          <div class="mb-4 px-6">
             <v-btn
               variant="text"
               color="primary"
@@ -243,9 +246,9 @@ const submitForm = async () => {
               {{ t('survey.labels.back') }}
             </v-btn>
           </div>
-          <v-form @submit.prevent="submitForm">
+          <v-form @submit.prevent="submitForm" >
             <!-- Section: Faro Experience -->
-            <v-sheet border rounded="xl" class="pa-6 mb-8 bg-grey-lighten-5">
+            <v-sheet class="pa-6 mb-8 border-b">
 
               <div class="d-flex align-center mb-6">
                 <v-icon icon="mdi-map-marker" color="primary" class="mr-2"></v-icon>
@@ -254,6 +257,10 @@ const submitForm = async () => {
               
               <div class="mb-8">
                 <p class="text-body-1 font-weight-medium mb-4">1. {{ t('survey.questions.q2') }}</p>
+                <div v-if="smAndDown" class="d-flex justify-space-between mb-2 px-4">
+                  <span class="text-caption font-weight-bold">{{ t('survey.labels.very_poor') }} (0)</span>
+                  <span class="text-caption font-weight-bold">{{ t('survey.labels.excellent') }} (10)</span>
+                </div>
                 <v-slider
                   v-model="form.faro_rating"
                   min="0"
@@ -263,11 +270,12 @@ const submitForm = async () => {
                   color="primary"
                   track-color="primary-lighten-3"
                   class="px-4"
+                  :show-ticks="smAndDown ? 'always' : false"
                 >
-                  <template v-slot:prepend>
+                  <template v-if="!smAndDown" v-slot:prepend>
                     <span class="text-caption font-weight-bold">{{ t('survey.labels.very_poor') }} (0)</span>
                   </template>
-                  <template v-slot:append>
+                  <template v-if="!smAndDown" v-slot:append>
                     <span class="text-caption font-weight-bold">{{ t('survey.labels.excellent') }} (10)</span>
                   </template>
                 </v-slider>
@@ -298,7 +306,6 @@ const submitForm = async () => {
                   variant="outlined"
                   class="mb-6 mt-2"
                   rounded="lg"
-                  bg-color="white"
                 ></v-textarea>
               </v-expand-transition>
 
@@ -308,7 +315,6 @@ const submitForm = async () => {
                 rows="3"
                 variant="outlined"
                 rounded="lg"
-                bg-color="white"
                 class="mb-6"
               ></v-textarea>
 
@@ -366,7 +372,7 @@ const submitForm = async () => {
                         :value="option.value"
                         color="primary"
                         class="mr-4"
-                      ></v-radio>
+                  ></v-radio>
                     </v-radio-group>
                   </div>
                 </div>
@@ -374,7 +380,7 @@ const submitForm = async () => {
             </v-sheet>
 
             <!-- Section: Tech & Learning -->
-            <v-sheet border rounded="xl" class="pa-6 mb-8 bg-grey-lighten-5">
+            <v-sheet class="pa-6 mb-8 border-b">
               <div class="d-flex align-center mb-6">
                 <v-icon icon="mdi-cellphone-cog" color="secondary" class="mr-2"></v-icon>
                 <div class="text-h6 font-weight-bold text-secondary text-uppercase">{{ t('survey.sections.tech_learning') }}</div>
@@ -403,7 +409,8 @@ const submitForm = async () => {
                     color="amber-darken-2"
                     active-color="amber-darken-2"
                     hover
-                    size="large"
+                    :size="smAndDown ? 'small' : 'large'"
+                    :density="smAndDown ? 'compact' : 'default'"
                   ></v-rating>
                 </div>
               </div>
@@ -459,8 +466,8 @@ const submitForm = async () => {
                     color="green-darken-1"
                     active-color="green-darken-1"
                     hover
-                    size="large"
-                    density="comfortable"
+                    :size="smAndDown ? 'small' : 'large'"
+                    :density="smAndDown ? 'compact' : 'comfortable'"
                   ></v-rating>
                 </div>
               </div>
@@ -499,30 +506,33 @@ const submitForm = async () => {
               type="error"
               variant="tonal"
               closable
-              class="mb-6 rounded-lg"
+              class="mb-6 rounded-lg mx-6"
             >
               {{ error }}
             </v-alert>
 
-            <v-btn
-              block
-              color="primary"
-              size="x-large"
-              type="submit"
-              :loading="loading"
-              :disabled="loading"
-              class="rounded-xl font-weight-bold text-uppercase elevation-4 py-4"
-              height="64"
-            >
-              {{ t('survey.labels.submit') }}
-              <v-icon end icon="mdi-send" class="ml-2"></v-icon>
-            </v-btn>
+            <div class="d-flex justify-center px-4 pb-8">
+
+              <v-btn
+                block
+                color="primary"
+                type="submit"
+                :loading="loading"
+                :disabled="loading"
+                class="rounded-xl font-weight-bold text-uppercase elevation-4 py-4"
+                :class="smAndDown ? 'w-100' : 'w-50'"
+                height="46"
+              >
+                {{ t('survey.labels.submit') }}
+                <v-icon end icon="mdi-send" class="ml-2"></v-icon>
+              </v-btn>
+            </div>
           </v-form>
         </v-window-item>
 
         <!-- Final Step: Success/Already Responded -->
         <v-window-item :value="3" v-if="submitted || alreadyResponded">
-          <v-sheet class="text-center py-12 rounded-xl border-dashed border-md border-opacity-25" :color="alreadyResponded ? 'amber-lighten-5' : 'success-lighten-5'">
+          <v-sheet class="text-center py-12 rounded-xl border-dashed border-md border-opacity-25" :color="alreadyResponded ? (theme.global.current.value.dark ? 'amber-darken-4' : 'amber-lighten-5') : (theme.global.current.value.dark ? 'success-darken-4' : 'success-lighten-5')">
             <v-icon
               :icon="alreadyResponded ? 'mdi-alert-circle' : 'mdi-check-circle-outline'"
               size="120"
@@ -537,7 +547,7 @@ const submitForm = async () => {
             </p>
             <v-btn
               variant="outlined"
-              color="primary"
+              color="btn-color"
               class="mt-10 rounded-xl"
               prepend-icon="mdi-home"
               @click="step = 1; submitted = false; alreadyResponded = false;"
@@ -552,9 +562,16 @@ const submitForm = async () => {
 </template>
 
 <style scoped>
-.v-container {
-  background: radial-gradient(circle at top left, #f8f9fa 0%, #e9ecef 100%);
+.main-container {
   min-height: 100vh;
+}
+
+.v-theme--light .main-container {
+  background: radial-gradient(circle at top left, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.v-theme--dark .main-container {
+  background: radial-gradient(circle at top left, #3a3a3a 0%, #302e2e 100%);
 }
 
 .pulse-icon {
@@ -577,7 +594,7 @@ const submitForm = async () => {
 }
 
 .v-list-item--hover:hover {
-  background-color: rgba(var(--v-theme-primary), 0.05);
+  background-color: rgba(var(--v-theme-primary), 0.1);
   transform: translateY(-2px);
   transition: all 0.2s ease;
 }
@@ -586,14 +603,14 @@ const submitForm = async () => {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  opacity: 0.3;
+  opacity: 0.1;
   transition: all 0.3s;
   z-index: 100;
 }
 
 .admin-access-btn:hover {
   opacity: 1;
-  background-color: white !important;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  background-color: rgb(var(--v-theme-surface)) !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
 </style>
