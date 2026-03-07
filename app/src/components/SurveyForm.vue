@@ -563,17 +563,8 @@ const submitForm = async () => {
 
 <style scoped>
 .main-container {
-  min-height: 100vh;
+  min-height: calc(100vh - 128px);
 }
-
-.v-theme--light .main-container {
-  background: radial-gradient(circle at top left, #f8f9fa 0%, #e9ecef 100%);
-}
-
-.v-theme--dark .main-container {
-  background: radial-gradient(circle at top left, #3a3a3a 0%, #302e2e 100%);
-}
-
 .pulse-icon {
   animation: pulse 2s infinite;
 }

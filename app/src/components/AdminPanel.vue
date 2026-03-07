@@ -310,7 +310,7 @@ const fetchData = async () => {
 
             <div class="mt-4 pt-4 border-t">
               <div class="text-caption text-medium-emphasis">IP Address</div>
-              <div class="text-body-2 font-italic">{{ selectedResponse.ip }}</div>
+              <div class="text-body-2 font-italic">{{ selectedResponse.ip_address }}</div>
             </div>
           </div>
         </v-card-text>
@@ -324,6 +324,6 @@ const fetchData = async () => {
 </template>
 <style scoped>
 .main-container {
-  min-height: calc(100vh - 64px);
+  min-height: calc(100vh - 128px);
 }
 </style>

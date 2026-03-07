@@ -46,7 +46,7 @@ const toggleAdmin = () => {
       </v-btn>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="main-content">
       <div v-if="!showAdmin">
         <SurveyForm @toggle-admin="toggleAdmin" />
       </div>
@@ -56,14 +56,27 @@ const toggleAdmin = () => {
 
       <!-- Footer -->
       <v-footer class="bg-transparent justify-center pt-8 pb-4">
-        <span class="text-caption text-medium-emphasis">By Philippe Schlup</span>
+        <span class="text-caption text-medium-emphasis font-weight-medium">Made by Philippe Schlup</span>
       </v-footer>
     </v-main>
-  </v-app>
-</template>
+    </v-app>
+    </template>
 
-<style>
-.theme-icon {
+    <style>
+    .main-content {
+    min-height: 100vh;
+    }
+
+    .v-theme--light .main-content {
+    background: radial-gradient(circle at top left, #f8f9fa 0%, #e9ecef 100%);
+    }
+
+    .v-theme--dark .main-content {
+    background: radial-gradient(circle at top left, #3a3a3a 0%, #302e2e 100%);
+    }
+
+    .theme-icon {
+
   animation: theme-icon-spin 0.4s ease-out;
 }
 
