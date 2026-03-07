@@ -15,7 +15,14 @@ CREATE TABLE responses (
   os_satisfaction SMALLINT,
   duolingo_rating SMALLINT,
   duolingo_flaw TEXT,
-  willing_to_pay TEXT
+  willing_to_pay TEXT,
+  faro_residence_duration TEXT,
+  business_plan TEXT,
+  business_field TEXT,
+  app_help_business TEXT,
+  most_used_app TEXT,
+  most_used_app_reason TEXT,
+  subject_to_study TEXT
 );
 
 -- Enable Row Level Security (RLS)

@@ -1,7 +1,7 @@
 {
   "survey": {
-    "title": "Encuesta Multilingüe: Experiencia en Faro y Hábitos de Aprendizaje",
-    "subtitle": "Encuesta Multi-Idioma: Experiencia en Faro y Hábitos de Aprendizaje",
+    "title": "Encuesta: Faro y Aprendizaje",
+    "subtitle": "Su opinión es importante",
     "language_selection": {
       "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
       "en": "English (Anglais)",
@@ -14,7 +14,7 @@
       "tech_learning": "Tecnología y Aprendizaje de Idiomas"
     },
     "questions": {
-      "q2": "En una escala de 0 (Muy pobre) a 10 (Excelente), ¿cómo calificaría su valoración general de la ciudad de Faro?",
+      "q2": "¿Cómo calificaría su valoración general de Faro?",
       "q3": "¿Cuál considera que es el mayor defecto de Faro? (Seleccione todo lo que corresponda)",
       "q3_options": {
         "transport": "Transporte público (p. ej., servicio de autobús/tren)",
@@ -31,22 +31,75 @@
         "android": "Android",
         "ios": "iOS"
       },
-      "q7": "¿Cómo calificaría su satisfacción general con el sistema operativo de su móvil?",
-      "q8": "Si utiliza Duolingo, ¿cómo calificaría su valoración general de la aplicación?",
-      "q9": "¿Cuál considera que es el mayor defecto de Duolingo?",
+      "q7": "Califique su satisfacción con su sistema operativo móvil:",
+      "q8": "Califique su valoración de Duolingo:",
+      "q9": "¿Cuál es el mayor defecto de Duolingo?",
       "q9_options": {
         "repetitive": "Ejercicios repetitivos",
         "depth": "Falta de profundidad/práctica de conversación real",
         "ads": "Demasiados anuncios (si se usa la versión gratuita)",
-        "gamification": "La gamificación distrae",
+        "gamification": "La gamification distrae",
         "inaccurate": "El sistema de traducción es a veces impreciso",
         "none": "No utilizo Duolingo"
       },
-      "q10": "¿Estaría dispuesto a pagar 3 € al mes por una aplicación de aprendizaje de idiomas que satisfaga sus necesidades?",
+      "q10": "¿Preferirías pagar 3 euros al mes por una aplicación de aprendizaje de idiomas o usar una versión gratuita con anuncios?",
       "q10_options": {
-        "yes": "Sí, absolutamente",
-        "maybe": "Tal vez, dependiendo de las características",
-        "no": "No, prefiero opciones gratuitas"
+        "pay": "Pagar 3 euros",
+        "ads": "Versión gratuita con anuncios"
+      },
+      "q11": "¿Cuánto tiempo más planeas vivir en Faro?",
+      "q11_options": {
+        "less_1": "Menos de 1 año",
+        "1_year": "1 año",
+        "2_years": "2 años",
+        "3_years": "3 años",
+        "more_3": "Más de 3 años"
+      },
+      "q12": "¿Planeas iniciar un negocio algún día?",
+      "q12_options": {
+        "yes": "Sí, definitivamente",
+        "maybe": "Tal vez en el futuro",
+        "no": "No, no me interesa"
+      },
+      "q13": "¿En qué campo planeas iniciar tu negocio?",
+      "q13_options": {
+        "tourism": "Turismo",
+        "food": "Alimentos y bebidas (restaurante, cafetería, etc.)",
+        "engineering": "Ingeniería",
+        "healthcare": "Salud",
+        "other": "Otro"
+      },
+      "q14": "¿Crees que una aplicación podría ayudar a tu negocio?",
+      "q14_options": {
+        "yes": "Sí",
+        "no": "No",
+        "not_sure": "No estoy seguro"
+      },
+      "q15": "¿Qué aplicación usas más, excluyendo las redes sociales?",
+      "q15_options": {
+        "youtube": "YouTube",
+        "chatgpt": "ChatGPT",
+        "netflix": "Netflix",
+        "duolingo": "Duolingo",
+        "other": "Otra"
+      },
+      "q16": "En cuanto a la aplicación que más usas, ¿cuál dirías que es el motivo principal para usarla?",
+      "q16_options": {
+        "entertainment": "Entretenimiento",
+        "education": "Educación/Estudio",
+        "productivity": "Productividad",
+        "shopping": "Compras",
+        "finance": "Finanzas",
+        "other": "Otro"
+      },
+      "q17": "¿Qué asignatura estudias o te gustaría estudiar?",
+      "q17_options": {
+        "languages": "Idiomas",
+        "math": "Matemáticas",
+        "communication": "Comunicación",
+        "finance": "Finanzas",
+        "programming": "Programación",
+        "other": "Otro"
       }
     },
     "labels": {

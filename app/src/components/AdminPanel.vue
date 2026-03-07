@@ -16,7 +16,7 @@ const detailsDialog = ref(false)
 const exportToCSV = () => {
   if (responses.value.length === 0) return
 
-  const headers = ['Timestamp', 'IP Address', 'Language', 'Faro Rating', 'Faro Flaws', 'Other Flaws', 'Suggestions', 'OS', 'OS Satisfaction', 'Duolingo Rating', 'Duo Flaw', 'Willing to Pay']
+  const headers = ['Timestamp', 'IP Address', 'Language', 'Faro Rating', 'Faro Flaws', 'Other Flaws', 'Suggestions', 'Faro Duration', 'Business Plan', 'Business Field', 'App Help Business', 'OS', 'OS Satisfaction', 'Most Used App', 'Reason', 'Subject', 'Duolingo Rating', 'Duo Flaw', 'Willing to Pay']
   
   const csvRows = responses.value.map(res => [
     new Date(res.timestamp).toLocaleString(),
@@ -26,8 +26,15 @@ const exportToCSV = () => {
     Array.isArray(res.faro_flaws) ? res.faro_flaws.join('; ') : res.faro_flaws,
     res.faro_flaws_other || '',
     res.faro_suggestions || '',
+    res.faro_residence_duration || '',
+    res.business_plan || '',
+    res.business_field || '',
+    res.app_help_business || '',
     res.smartphone_os,
     res.os_satisfaction,
+    res.most_used_app || '',
+    res.most_used_app_reason || '',
+    res.subject_to_study || '',
     res.duolingo_rating,
     res.duolingo_flaw,
     res.willing_to_pay
@@ -259,9 +266,28 @@ const fetchData = async () => {
             </div>
 
             <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Faro Duration</div>
+              <div class="text-body-1">{{ selectedResponse.faro_residence_duration || 'No answer' }}</div>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Business Plan</div>
+              <div class="text-body-1">{{ selectedResponse.business_plan || 'No answer' }}</div>
+              <div v-if="selectedResponse.business_field" class="mt-1 text-body-2">Field: {{ selectedResponse.business_field }}</div>
+              <div v-if="selectedResponse.app_help_business" class="mt-1 text-body-2">App Help: {{ selectedResponse.app_help_business }}</div>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
               <div class="text-caption text-primary font-weight-bold mb-1">OS Satisfaction</div>
               <v-rating :model-value="selectedResponse.os_satisfaction" readonly length="5" size="x-small" color="amber"></v-rating>
               <span class="ml-2">({{ selectedResponse.os_satisfaction }}/5)</span>
+            </div>
+
+            <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">
+              <div class="text-caption text-primary font-weight-bold mb-1">Most Used App & Reason</div>
+              <div class="text-body-1">{{ selectedResponse.most_used_app || 'No answer' }}</div>
+              <div v-if="selectedResponse.most_used_app_reason" class="mt-1 text-body-2">Reason: {{ selectedResponse.most_used_app_reason }}</div>
+              <div v-if="selectedResponse.subject_to_study" class="mt-1 text-body-2">Subject: {{ selectedResponse.subject_to_study }}</div>
             </div>
 
             <div class="mb-4 pa-3 rounded-lg border bg-grey-lighten-5">

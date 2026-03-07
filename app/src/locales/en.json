@@ -1,7 +1,7 @@
 {
   "survey": {
-    "title": "Sondage Multilingue: Expérience à Faro et Habitudes d'Apprentissage",
-    "subtitle": "Multi-Language Survey: Faro Experience and Learning Habits",
+    "title": "Survey: Faro & Learning",
+    "subtitle": "Your feedback matters",
     "language_selection": {
       "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
       "en": "English (Anglais)",
@@ -14,7 +14,7 @@
       "tech_learning": "Technology and Language Learning"
     },
     "questions": {
-      "q2": "On a scale of 0 (Very Poor) to 10 (Excellent), how would you rate your overall appreciation of the city of Faro?",
+      "q2": "How would you rate your overall appreciation of Faro?",
       "q3": "What do you consider to be the single biggest flaw of Faro? (Select all that apply)",
       "q3_options": {
         "transport": "Public transport (e.g., bus/train service)",
@@ -31,9 +31,9 @@
         "android": "Android",
         "ios": "iOS"
       },
-      "q7": "How would you rate your overall satisfaction with your mobile operating system?",
-      "q8": "If you use Duolingo, how would you rate your overall appreciation of the application?",
-      "q9": "What do you consider Duolingo's biggest flaw?",
+      "q7": "Rate your satisfaction with your mobile OS:",
+      "q8": "Rate your appreciation of Duolingo:",
+      "q9": "What is Duolingo's biggest flaw?",
       "q9_options": {
         "repetitive": "Repetitive exercises",
         "depth": "Lack of depth/real conversation practice",
@@ -42,11 +42,64 @@
         "inaccurate": "The translation system is sometimes inaccurate",
         "none": "I don't use Duolingo"
       },
-      "q10": "Would you be willing to pay €3 a month for a language learning app that meets your needs?",
+      "q10": "Would you prefer to pay 3 euros per month for a language learning app or use a free version with ads?",
       "q10_options": {
-        "yes": "Yes, absolutely",
-        "maybe": "Maybe, depending on the features",
-        "no": "No, I prefer free options"
+        "pay": "Pay 3 euros",
+        "ads": "Free version with ads"
+      },
+      "q11": "How much longer do you plan to live in Faro?",
+      "q11_options": {
+        "less_1": "Less than 1 year",
+        "1_year": "1 year",
+        "2_years": "2 years",
+        "3_years": "3 years",
+        "more_3": "More than 3 years"
+      },
+      "q12": "Do you plan to start a business one day?",
+      "q12_options": {
+        "yes": "Yes, definitely",
+        "maybe": "Maybe in the future",
+        "no": "No, not interested"
+      },
+      "q13": "In which field do you plan to start your business?",
+      "q13_options": {
+        "tourism": "Tourism",
+        "food": "Food & Beverage (restaurant, coffee shop, etc.)",
+        "engineering": "Engineering",
+        "healthcare": "Healthcare",
+        "other": "Other"
+      },
+      "q14": "Do you think an app could help your business?",
+      "q14_options": {
+        "yes": "Yes",
+        "no": "No",
+        "not_sure": "Not sure"
+      },
+      "q15": "Which app do you use the most, excluding social media?",
+      "q15_options": {
+        "youtube": "YouTube",
+        "chatgpt": "ChatGPT",
+        "netflix": "Netflix",
+        "duolingo": "Duolingo",
+        "other": "Other"
+      },
+      "q16": "Regarding the app you use most, what would you say is the main reason for using it?",
+      "q16_options": {
+        "entertainment": "Entertainment",
+        "education": "Education/Study",
+        "productivity": "Productivity",
+        "shopping": "Shopping",
+        "finance": "Finance",
+        "other": "Other"
+      },
+      "q17": "What subject do you study or would you like to study?",
+      "q17_options": {
+        "languages": "Languages",
+        "math": "Mathematics",
+        "communication": "Communication",
+        "finance": "Finance",
+        "programming": "Programming",
+        "other": "Other"
       }
     },
     "labels": {

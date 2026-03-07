@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 
@@ -11,6 +11,8 @@ const submitted = ref(false)
 const alreadyResponded = ref(false)
 const error = ref('')
 
+const STORAGE_KEY = 'survey_form_data'
+
 const form = ref({
   faro_rating: 5,
   faro_flaws: [] as string[],
@@ -20,7 +22,41 @@ const form = ref({
   os_satisfaction: 3,
   duolingo_rating: 4,
   duolingo_flaw: '',
-  willing_to_pay: ''
+  willing_to_pay: '',
+  faro_residence_duration: '',
+  business_plan: '',
+  business_field: '',
+  app_help_business: '',
+  most_used_app: '',
+  most_used_app_reason: '',
+  subject_to_study: ''
+})
+
+// Persistence: Load from localStorage
+onMounted(() => {
+  const saved = localStorage.getItem(STORAGE_KEY)
+  if (saved) {
+    try {
+      const parsed = JSON.parse(saved)
+      form.value = { ...form.value, ...parsed }
+    } catch (e) {
+      console.error('Error loading saved form data', e)
+    }
+  }
+  
+  const savedLocale = localStorage.getItem('survey_locale')
+  if (savedLocale) {
+    locale.value = savedLocale
+  }
+})
+
+// Persistence: Save to localStorage
+watch(form, (newVal) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(newVal))
+}, { deep: true })
+
+watch(locale, (newVal) => {
+  localStorage.setItem('survey_locale', newVal)
 })
 
 const languages = [
@@ -54,9 +90,62 @@ const q9Options = [
 ]
 
 const q10Options = [
-  { value: 'yes', labelKey: 'survey.questions.q10_options.yes' },
-  { value: 'maybe', labelKey: 'survey.questions.q10_options.maybe' },
-  { value: 'no', labelKey: 'survey.questions.q10_options.no' }
+  { value: 'pay', labelKey: 'survey.questions.q10_options.pay' },
+  { value: 'ads', labelKey: 'survey.questions.q10_options.ads' }
+]
+
+const q11Options = [
+  { value: 'less_1', labelKey: 'survey.questions.q11_options.less_1' },
+  { value: '1_year', labelKey: 'survey.questions.q11_options.1_year' },
+  { value: '2_years', labelKey: 'survey.questions.q11_options.2_years' },
+  { value: '3_years', labelKey: 'survey.questions.q11_options.3_years' },
+  { value: 'more_3', labelKey: 'survey.questions.q11_options.more_3' }
+]
+
+const q12Options = [
+  { value: 'yes', labelKey: 'survey.questions.q12_options.yes' },
+  { value: 'maybe', labelKey: 'survey.questions.q12_options.maybe' },
+  { value: 'no', labelKey: 'survey.questions.q12_options.no' }
+]
+
+const q13Options = [
+  { value: 'tourism', labelKey: 'survey.questions.q13_options.tourism' },
+  { value: 'food', labelKey: 'survey.questions.q13_options.food' },
+  { value: 'engineering', labelKey: 'survey.questions.q13_options.engineering' },
+  { value: 'healthcare', labelKey: 'survey.questions.q13_options.healthcare' },
+  { value: 'other', labelKey: 'survey.questions.q13_options.other' }
+]
+
+const q14Options = [
+  { value: 'yes', labelKey: 'survey.questions.q14_options.yes' },
+  { value: 'no', labelKey: 'survey.questions.q14_options.no' },
+  { value: 'not_sure', labelKey: 'survey.questions.q14_options.not_sure' }
+]
+
+const q15Options = [
+  { value: 'youtube', labelKey: 'survey.questions.q15_options.youtube' },
+  { value: 'chatgpt', labelKey: 'survey.questions.q15_options.chatgpt' },
+  { value: 'netflix', labelKey: 'survey.questions.q15_options.netflix' },
+  { value: 'duolingo', labelKey: 'survey.questions.q15_options.duolingo' },
+  { value: 'other', labelKey: 'survey.questions.q15_options.other' }
+]
+
+const q16Options = [
+  { value: 'entertainment', labelKey: 'survey.questions.q16_options.entertainment' },
+  { value: 'education', labelKey: 'survey.questions.q16_options.education' },
+  { value: 'productivity', labelKey: 'survey.questions.q16_options.productivity' },
+  { value: 'shopping', labelKey: 'survey.questions.q16_options.shopping' },
+  { value: 'finance', labelKey: 'survey.questions.q16_options.finance' },
+  { value: 'other', labelKey: 'survey.questions.q16_options.other' }
+]
+
+const q17Options = [
+  { value: 'languages', labelKey: 'survey.questions.q17_options.languages' },
+  { value: 'math', labelKey: 'survey.questions.q17_options.math' },
+  { value: 'communication', labelKey: 'survey.questions.q17_options.communication' },
+  { value: 'finance', labelKey: 'survey.questions.q17_options.finance' },
+  { value: 'programming', labelKey: 'survey.questions.q17_options.programming' },
+  { value: 'other', labelKey: 'survey.questions.q17_options.other' }
 ]
 
 const changeLanguage = (lang: string) => {
@@ -76,6 +165,8 @@ const submitForm = async () => {
     if (response.data.success) {
       submitted.value = true
       step.value = 3
+      // Clear persistence on success
+      localStorage.removeItem(STORAGE_KEY)
     }
   } catch (err: any) {
     if (err.response && err.response.status === 403) {
@@ -152,7 +243,7 @@ const submitForm = async () => {
               {{ t('survey.labels.back') }}
             </v-btn>
           </div>
-          <v-form @submit.prevent="submitForm" >
+          <v-form @submit.prevent="submitForm">
             <!-- Section: Faro Experience -->
             <v-sheet border rounded="xl" class="pa-6 mb-8 bg-grey-lighten-5">
 
@@ -162,7 +253,7 @@ const submitForm = async () => {
               </div>
               
               <div class="mb-8">
-                <p class="text-body-1 font-weight-medium mb-4">2. {{ t('survey.questions.q2') }}</p>
+                <p class="text-body-1 font-weight-medium mb-4">1. {{ t('survey.questions.q2') }}</p>
                 <v-slider
                   v-model="form.faro_rating"
                   min="0"
@@ -183,7 +274,7 @@ const submitForm = async () => {
               </div>
 
               <div class="mb-6">
-                <p class="text-body-1 font-weight-medium mb-3">3. {{ t('survey.questions.q3') }}</p>
+                <p class="text-body-1 font-weight-medium mb-3">2. {{ t('survey.questions.q3') }}</p>
                 <v-row dense>
                   <v-col v-for="option in q3Options" :key="option.value" cols="12" sm="6">
                     <v-checkbox
@@ -218,7 +309,68 @@ const submitForm = async () => {
                 variant="outlined"
                 rounded="lg"
                 bg-color="white"
+                class="mb-6"
               ></v-textarea>
+
+              <div class="mb-6">
+                <p class="text-body-1 font-weight-medium mb-3">3. {{ t('survey.questions.q11') }}</p>
+                <v-radio-group v-model="form.faro_residence_duration">
+                  <v-radio
+                    v-for="option in q11Options"
+                    :key="option.value"
+                    :label="t(option.labelKey)"
+                    :value="option.value"
+                    color="primary"
+                    class="mb-1"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
+
+              <div class="mb-6">
+                <p class="text-body-1 font-weight-medium mb-3">4. {{ t('survey.questions.q12') }}</p>
+                <v-radio-group v-model="form.business_plan" inline>
+                  <v-radio
+                    v-for="option in q12Options"
+                    :key="option.value"
+                    :label="t(option.labelKey)"
+                    :value="option.value"
+                    color="primary"
+                    class="mr-4"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
+
+              <v-expand-transition>
+                <div v-if="form.business_plan === 'yes' || form.business_plan === 'maybe'">
+                  <div class="mb-6">
+                    <p class="text-body-1 font-weight-medium mb-3">5. {{ t('survey.questions.q13') }}</p>
+                    <v-radio-group v-model="form.business_field">
+                      <v-radio
+                        v-for="option in q13Options"
+                        :key="option.value"
+                        :label="t(option.labelKey)"
+                        :value="option.value"
+                        color="primary"
+                        class="mb-1"
+                      ></v-radio>
+                    </v-radio-group>
+                  </div>
+
+                  <div class="mb-6">
+                    <p class="text-body-1 font-weight-medium mb-3">6. {{ t('survey.questions.q14') }}</p>
+                    <v-radio-group v-model="form.app_help_business" inline>
+                      <v-radio
+                        v-for="option in q14Options"
+                        :key="option.value"
+                        :label="t(option.labelKey)"
+                        :value="option.value"
+                        color="primary"
+                        class="mr-4"
+                      ></v-radio>
+                    </v-radio-group>
+                  </div>
+                </div>
+              </v-expand-transition>
             </v-sheet>
 
             <!-- Section: Tech & Learning -->
@@ -229,7 +381,7 @@ const submitForm = async () => {
               </div>
 
               <div class="mb-8">
-                <p class="text-body-1 font-weight-medium mb-3">6. {{ t('survey.questions.q6') }}</p>
+                <p class="text-body-1 font-weight-medium mb-3">7. {{ t('survey.questions.q6') }}</p>
                 <v-radio-group v-model="form.smartphone_os" inline>
                   <v-radio
                     v-for="option in q6Options"
@@ -243,11 +395,11 @@ const submitForm = async () => {
               </div>
 
               <div class="mb-8">
-                <p class="text-body-1 font-weight-medium mb-3">7. {{ t('survey.questions.q7') }}</p>
+                <p class="text-body-1 font-weight-medium mb-3">8. {{ t('survey.questions.q7') }}</p>
                 <div class="d-flex justify-center">
                   <v-rating
                     v-model="form.os_satisfaction"
-                    length="5"
+                    length="10"
                     color="amber-darken-2"
                     active-color="amber-darken-2"
                     hover
@@ -257,11 +409,53 @@ const submitForm = async () => {
               </div>
 
               <div class="mb-8">
-                <p class="text-body-1 font-weight-medium mb-3">8. {{ t('survey.questions.q8') }}</p>
+                <p class="text-body-1 font-weight-medium mb-3">9. {{ t('survey.questions.q15') }}</p>
+                <v-radio-group v-model="form.most_used_app">
+                  <v-radio
+                    v-for="option in q15Options"
+                    :key="option.value"
+                    :label="t(option.labelKey)"
+                    :value="option.value"
+                    color="secondary"
+                    class="mb-1"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
+
+              <div class="mb-8">
+                <p class="text-body-1 font-weight-medium mb-3">10. {{ t('survey.questions.q16') }}</p>
+                <v-radio-group v-model="form.most_used_app_reason">
+                  <v-radio
+                    v-for="option in q16Options"
+                    :key="option.value"
+                    :label="t(option.labelKey)"
+                    :value="option.value"
+                    color="secondary"
+                    class="mb-1"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
+
+              <div class="mb-8">
+                <p class="text-body-1 font-weight-medium mb-3">11. {{ t('survey.questions.q17') }}</p>
+                <v-radio-group v-model="form.subject_to_study">
+                  <v-radio
+                    v-for="option in q17Options"
+                    :key="option.value"
+                    :label="t(option.labelKey)"
+                    :value="option.value"
+                    color="secondary"
+                    class="mb-1"
+                  ></v-radio>
+                </v-radio-group>
+              </div>
+
+              <div class="mb-8">
+                <p class="text-body-1 font-weight-medium mb-3">12. {{ t('survey.questions.q8') }}</p>
                 <div class="d-flex justify-center">
                   <v-rating
                     v-model="form.duolingo_rating"
-                    length="7"
+                    length="10"
                     color="green-darken-1"
                     active-color="green-darken-1"
                     hover
@@ -272,7 +466,7 @@ const submitForm = async () => {
               </div>
 
               <div class="mb-8">
-                <p class="text-body-1 font-weight-medium mb-3">9. {{ t('survey.questions.q9') }}</p>
+                <p class="text-body-1 font-weight-medium mb-3">13. {{ t('survey.questions.q9') }}</p>
                 <v-radio-group v-model="form.duolingo_flaw">
                   <v-radio
                     v-for="option in q9Options"
@@ -286,7 +480,7 @@ const submitForm = async () => {
               </div>
 
               <div class="mb-8">
-                <p class="text-body-1 font-weight-medium mb-3">10. {{ t('survey.questions.q10') }}</p>
+                <p class="text-body-1 font-weight-medium mb-3">14. {{ t('survey.questions.q10') }}</p>
                 <v-radio-group v-model="form.willing_to_pay">
                   <v-radio
                     v-for="option in q10Options"

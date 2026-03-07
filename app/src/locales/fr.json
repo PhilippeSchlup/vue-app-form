@@ -1,7 +1,7 @@
 {
   "survey": {
-    "title": "Sondage Multilingue: Expérience à Faro et Habitudes d'Apprentissage",
-    "subtitle": "Sondage Multi-Langues : Expérience à Faro et Habitudes d'Apprentissage",
+    "title": "Sondage: Faro & Apprentissage",
+    "subtitle": "Votre avis compte",
     "language_selection": {
       "question": "Choisissez votre langue préférée pour répondre au sondage: / Please choose your preferred language for the survey: / Por favor, escolha o seu idioma preferido para o inquérito: / Elija su idioma preferido para la encuesta:",
       "en": "English (Anglais)",
@@ -14,7 +14,7 @@
       "tech_learning": "Technologie et Apprentissage des Langues"
     },
     "questions": {
-      "q2": "Sur une échelle de 0 (Très médiocre) à 10 (Excellent), comment évalueriez-vous votre appréciation globale de la ville de Faro ?",
+      "q2": "Comment évalueriez-vous votre appréciation globale de Faro ?",
       "q3": "Quel est selon vous le plus gros défaut de Faro ? (Sélectionnez tout ce qui s'applique)",
       "q3_options": {
         "transport": "Transports publics (ex. service de bus/train)",
@@ -31,9 +31,9 @@
         "android": "Android",
         "ios": "iOS"
       },
-      "q7": "Comment évalueriez-vous votre satisfaction globale à l'égard de votre système d'exploitation mobile ?",
-      "q8": "Si vous utilisez Duolingo, comment évalueriez-vous votre appréciation globale de l'application ?",
-      "q9": "Quel est selon vous le plus gros défaut de Duolingo ?",
+      "q7": "Évaluez votre satisfaction à l'égard de votre système d'exploitation mobile :",
+      "q8": "Évaluez votre appréciation de Duolingo :",
+      "q9": "Quel est le plus gros défaut de Duolingo ?",
       "q9_options": {
         "repetitive": "Exercices répétitifs",
         "depth": "Manque de profondeur/pratique de conversation réelle",
@@ -42,11 +42,64 @@
         "inaccurate": "Le système de traduction est parfois imprécis",
         "none": "Je n'utilise pas Duolingo"
       },
-      "q10": "Seriez-vous prêt à payer 3 € par mois pour une application d'apprentissage des langues qui répond à vos besoins ?",
+      "q10": "Préféreriez-vous payer 3 euros par mois pour une application d'apprentissage des langues ou utiliser une version gratuite avec des publicités ?",
       "q10_options": {
-        "yes": "Oui, absolument",
-        "maybe": "Peut-être, selon les fonctionnalités",
-        "no": "Non, je préfère les options gratuites"
+        "pay": "Payer 3 euros",
+        "ads": "Version gratuite avec publicités"
+      },
+      "q11": "Combien de temps prévoyez-vous encore de vivre à Faro ?",
+      "q11_options": {
+        "less_1": "Moins d'un an",
+        "1_year": "1 an",
+        "2_years": "2 ans",
+        "3_years": "3 ans",
+        "more_3": "Plus de 3 ans"
+      },
+      "q12": "Prévoyez-vous de créer une entreprise un jour ?",
+      "q12_options": {
+        "yes": "Oui, certainement",
+        "maybe": "Peut-être à l'avenir",
+        "no": "Non, pas intéressé"
+      },
+      "q13": "Dans quel domaine prévoyez-vous de lancer votre entreprise ?",
+      "q13_options": {
+        "tourism": "Tourisme",
+        "food": "Restauration (restaurant, café, etc.)",
+        "engineering": "Ingénierie",
+        "healthcare": "Santé",
+        "other": "Autre"
+      },
+      "q14": "Pensez-vous qu'une application pourrait aider votre entreprise ?",
+      "q14_options": {
+        "yes": "Oui",
+        "no": "Non",
+        "not_sure": "Pas sûr"
+      },
+      "q15": "Quelle application utilisez-vous le plus, hors réseaux sociaux ?",
+      "q15_options": {
+        "youtube": "YouTube",
+        "chatgpt": "ChatGPT",
+        "netflix": "Netflix",
+        "duolingo": "Duolingo",
+        "other": "Autre"
+      },
+      "q16": "Concernant l'application que vous utilisez le plus, quelle est la raison principale de son utilisation ?",
+      "q16_options": {
+        "entertainment": "Divertissement",
+        "education": "Éducation/Études",
+        "productivity": "Productivité",
+        "shopping": "Achats",
+        "finance": "Finance",
+        "other": "Autre"
+      },
+      "q17": "Quel sujet étudiez-vous ou aimeriez-vous étudier ?",
+      "q17_options": {
+        "languages": "Langues",
+        "math": "Mathématiques",
+        "communication": "Communication",
+        "finance": "Finance",
+        "programming": "Programmation",
+        "other": "Autre"
       }
     },
     "labels": {
