@@ -105,6 +105,7 @@
     "labels": {
       "very_poor": "Muito pobre",
       "excellent": "Excelente",
+      "please_specify": "Especifique:",
       "submit": "Submeter",
       "back": "Voltar à seleção de idioma",
       "already_responded": "Já submeteu uma resposta",

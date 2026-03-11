@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay, useTheme } from 'vuetify'
 import axios from 'axios'
@@ -29,11 +29,24 @@ const form = ref({
   faro_residence_duration: '',
   business_plan: '',
   business_field: '',
+  business_field_other: '',
   app_help_business: '',
   most_used_app: '',
+  most_used_app_other: '',
   most_used_app_reason: '',
-  subject_to_study: ''
+  most_used_app_reason_other: '',
+  subject_to_study: '',
+  subject_to_study_other: ''
 })
+
+// History sync handler
+const handlePopState = (event: PopStateEvent) => {
+  if (event.state && event.state.step) {
+    step.value = event.state.step
+  } else {
+    step.value = 1
+  }
+}
 
 // Persistence: Load from localStorage
 onMounted(() => {
@@ -51,6 +64,20 @@ onMounted(() => {
   if (savedLocale) {
     locale.value = savedLocale
   }
+
+  // Initial history state check
+  if (window.history.state && window.history.state.step) {
+    step.value = window.history.state.step
+  } else {
+    // Set initial state for step 1
+    window.history.replaceState({ step: 1 }, '')
+  }
+
+  window.addEventListener('popstate', handlePopState)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('popstate', handlePopState)
 })
 
 // Persistence: Save to localStorage
@@ -154,6 +181,18 @@ const q17Options = [
 const changeLanguage = (lang: string) => {
   locale.value = lang
   step.value = 2
+  window.history.pushState({ step: 2 }, '')
+}
+
+const goBack = () => {
+  window.history.back()
+}
+
+const goBackToStart = () => {
+  step.value = 1
+  submitted.value = false
+  alreadyResponded.value = false
+  window.history.pushState({ step: 1 }, '')
 }
 
 const submitForm = async () => {
@@ -161,13 +200,32 @@ const submitForm = async () => {
   error.value = ''
   try {
     const apiUrl = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '')
-    const response = await axios.post(`${apiUrl}/api/submit`, {
+    
+    // Create a copy of the form data to modify for submission
+    const submissionData = { 
       ...form.value,
       language: locale.value,
-    })
+    }
+
+    // Merge 'other' values for radio groups if 'other' is selected and text is provided
+    if (submissionData.business_field === 'other' && form.value.business_field_other.trim()) {
+      submissionData.business_field = form.value.business_field_other.trim()
+    }
+    if (submissionData.most_used_app === 'other' && form.value.most_used_app_other.trim()) {
+      submissionData.most_used_app = form.value.most_used_app_other.trim()
+    }
+    if (submissionData.most_used_app_reason === 'other' && form.value.most_used_app_reason_other.trim()) {
+      submissionData.most_used_app_reason = form.value.most_used_app_reason_other.trim()
+    }
+    if (submissionData.subject_to_study === 'other' && form.value.subject_to_study_other.trim()) {
+      submissionData.subject_to_study = form.value.subject_to_study_other.trim()
+    }
+
+    const response = await axios.post(`${apiUrl}/api/submit`, submissionData)
     if (response.data.success) {
       submitted.value = true
       step.value = 3
+      window.history.pushState({ step: 3 }, '')
       // Clear persistence on success
       localStorage.removeItem(STORAGE_KEY)
     }
@@ -175,6 +233,7 @@ const submitForm = async () => {
     if (err.response && err.response.status === 403) {
       alreadyResponded.value = true
       step.value = 3
+      window.history.pushState({ step: 3 }, '')
     } else {
       error.value = 'An error occurred. Please try again.'
     }
@@ -240,7 +299,7 @@ const submitForm = async () => {
               variant="text"
               color="primary"
               prepend-icon="mdi-arrow-left"
-              @click="step = 1"
+              @click="goBack"
               class="font-weight-bold"
             >
               {{ t('survey.labels.back') }}
@@ -360,6 +419,17 @@ const submitForm = async () => {
                         class="mb-1"
                       ></v-radio>
                     </v-radio-group>
+                    <v-expand-transition>
+                      <v-text-field
+                        v-if="form.business_field === 'other'"
+                        v-model="form.business_field_other"
+                        :label="t('survey.labels.please_specify')"
+                        variant="outlined"
+                        class="mb-4 mt-n2"
+                        rounded="lg"
+                        density="comfortable"
+                      ></v-text-field>
+                    </v-expand-transition>
                   </div>
 
                   <div class="mb-6">
@@ -427,6 +497,17 @@ const submitForm = async () => {
                     class="mb-1"
                   ></v-radio>
                 </v-radio-group>
+                <v-expand-transition>
+                  <v-text-field
+                    v-if="form.most_used_app === 'other'"
+                    v-model="form.most_used_app_other"
+                    :label="t('survey.labels.please_specify')"
+                    variant="outlined"
+                    class="mb-4 mt-n2"
+                    rounded="lg"
+                    density="comfortable"
+                  ></v-text-field>
+                </v-expand-transition>
               </div>
 
               <div class="mb-8">
@@ -441,6 +522,17 @@ const submitForm = async () => {
                     class="mb-1"
                   ></v-radio>
                 </v-radio-group>
+                <v-expand-transition>
+                  <v-text-field
+                    v-if="form.most_used_app_reason === 'other'"
+                    v-model="form.most_used_app_reason_other"
+                    :label="t('survey.labels.please_specify')"
+                    variant="outlined"
+                    class="mb-4 mt-n2"
+                    rounded="lg"
+                    density="comfortable"
+                  ></v-text-field>
+                </v-expand-transition>
               </div>
 
               <div class="mb-8">
@@ -455,6 +547,17 @@ const submitForm = async () => {
                     class="mb-1"
                   ></v-radio>
                 </v-radio-group>
+                <v-expand-transition>
+                  <v-text-field
+                    v-if="form.subject_to_study === 'other'"
+                    v-model="form.subject_to_study_other"
+                    :label="t('survey.labels.please_specify')"
+                    variant="outlined"
+                    class="mb-4 mt-n2"
+                    rounded="lg"
+                    density="comfortable"
+                  ></v-text-field>
+                </v-expand-transition>
               </div>
 
               <div class="mb-8">
@@ -550,7 +653,7 @@ const submitForm = async () => {
               color="btn-color"
               class="mt-10 rounded-xl"
               prepend-icon="mdi-home"
-              @click="step = 1; submitted = false; alreadyResponded = false;"
+              @click="goBackToStart"
             >
               {{ t('survey.labels.back_to_start') }}
             </v-btn>
