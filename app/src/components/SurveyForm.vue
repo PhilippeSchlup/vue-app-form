@@ -635,7 +635,7 @@ const submitForm = async () => {
 
         <!-- Final Step: Success/Already Responded -->
         <v-window-item :value="3" v-if="submitted || alreadyResponded">
-          <v-sheet class="text-center py-12 rounded-xl border-dashed border-md border-opacity-25" :color="alreadyResponded ? (theme.global.current.value.dark ? 'amber-darken-4' : 'amber-lighten-5') : (theme.global.current.value.dark ? 'success-darken-4' : 'success-lighten-5')">
+          <v-sheet class="text-center py-12 ma-4 rounded-xl border-dashed border-md border-opacity-25" :color="alreadyResponded ? (theme.global.current.value.dark ? 'amber-darken-4' : 'amber-lighten-5') : (theme.global.current.value.dark ? 'success-darken-4' : 'success-lighten-5')">
             <v-icon
               :icon="alreadyResponded ? 'mdi-alert-circle' : 'mdi-check-circle-outline'"
               size="120"
